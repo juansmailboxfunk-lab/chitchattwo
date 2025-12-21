@@ -280,3 +280,15 @@ section#servicios, section#contacto{ padding: 60px 0; }
   .hero-band{ top: 52%; height: 52px; }
   .hero-title{ left: 50%; bottom: 10%; }
 }
+
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ✅ Make image appear first */
+  .hero-art {
+    order: -1;
+  }
+}
+
