@@ -292,3 +292,9 @@ section#servicios, section#contacto{ padding: 60px 0; }
   }
 }
 
+@media (max-width: 900px) {
+  .hero-art {
+    justify-items: center;
+  }
+}
+
