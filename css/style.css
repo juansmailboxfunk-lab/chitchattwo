@@ -304,4 +304,23 @@ section#servicios, section#contacto{ padding: 60px 0; }
   }
 }
 
+@media (max-width: 900px) {
+  /* Force the container to flex so ordering ALWAYS works */
+  .hero-grid {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Put image first */
+  .hero-art {
+    order: -1 !important;
+  }
+
+  /* Put text second */
+  .hero-copy {
+    order: 1 !important;
+  }
+}
+
+
 
