@@ -343,3 +343,33 @@ section#contacto{
 .hero-scene{
   transform: none;
 }
+
+
+
+/* =========================
+   FALLBACK: iOS/Safari aspect-ratio issues
+   If aspect-ratio is not supported, .hero-scene can collapse to 0 height
+   because its children are absolutely positioned.
+   ========================= */
+
+@supports not (aspect-ratio: 4 / 3) {
+  .hero-scene{
+    height: 0;
+    padding-top: 75%; /* 4:3 */
+  }
+  .hero-scene img,
+  .hero-glow,
+  .hero-title{
+    inset: 0;
+  }
+}
+
+/* Extra safety on small screens: ensure the scene has a visible height */
+@media (max-width: 900px){
+  .hero-scene{
+    width: 100%;
+    max-width: 560px;
+    min-height: 260px;
+  }
+}
+
