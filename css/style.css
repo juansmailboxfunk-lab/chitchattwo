@@ -1,4 +1,6 @@
-/* Chit Chat — Minimal site shell + Hero recreation */
+/* Chit Chat — Clean stylesheet (hero + header)
+   Consolidated + corrected from your current file.
+*/
 
 :root{
   --ink: #2b2b2b;
@@ -11,6 +13,7 @@
 
 *{ box-sizing: border-box; }
 html, body{ height: 100%; }
+
 body{
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -23,46 +26,62 @@ body{
   margin: 0 auto;
 }
 
-/* Header */
+/* =========================
+   HEADER / NAV
+   ========================= */
+
+/* Fix: sticky top MUST be 0 (your file had top: 68% which breaks layout) */
 header{
   position: sticky;
-  top: 68%;
-  z-index: 50;
+  top: 0;
+  z-index: 9999; /* keep above hero layers */
   backdrop-filter: blur(10px);
-  background: rgba(251,251,253,.75);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(251,251,253,.78);
   border-bottom: 1px solid rgba(0,0,0,.06);
 }
+
 nav{
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 14px 0;
+  gap: 14px;
 }
+
 nav a{
   text-decoration: none;
   color: var(--ink);
   font-weight: 700;
 }
+
 nav .links{
   display: flex;
   gap: 18px;
   align-items: center;
+  flex-wrap: wrap; /* prevents overflow */
+  justify-content: flex-end;
 }
+
 nav .cta{
   padding: 10px 14px;
   border-radius: 999px;
   background: rgba(255,255,255,.7);
   border: 1px solid rgba(0,0,0,.08);
   box-shadow: 0 10px 20px rgba(0,0,0,.06);
+  white-space: nowrap;
 }
 
-/* HERO */
+/* =========================
+   HERO
+   ========================= */
+
 .hero{ padding: 22px 0 34px; }
 
 .hero-card{
   position: relative;
   border-radius: var(--radius);
-  overflow: hidden; /* critical */
+  overflow: hidden; /* critical: prevents edge artifacts */
   box-shadow: var(--card-shadow);
   min-height: 560px;
 }
@@ -111,6 +130,7 @@ nav .cta{
   padding: 34px 34px 28px;
 }
 
+/* Copy */
 .hero-copy h1{
   margin: 0 0 6px;
   font-size: clamp(44px, 5vw, 70px);
@@ -145,6 +165,7 @@ nav .cta{
   display: grid;
   gap: 12px;
 }
+
 .hero-bullets li{
   display: flex;
   align-items: center;
@@ -152,6 +173,7 @@ nav .cta{
   font-size: 20px;
   color: rgba(0,0,0,.70);
 }
+
 .hero-bullets li::before{
   content: "✓";
   display: inline-grid;
@@ -172,6 +194,7 @@ nav .cta{
   flex-wrap: wrap;
 }
 
+/* Buttons */
 .btn{
   display: inline-flex;
   align-items: center;
@@ -183,19 +206,27 @@ nav .cta{
   border: 1px solid transparent;
   box-shadow: 0 12px 24px rgba(0,0,0,.10);
 }
+
 .btn-primary{
   background: var(--cta);
   color: rgba(255,255,255,.96);
 }
 .btn-primary:hover{ background: var(--cta-hover); }
+
 .btn-ghost{
   background: rgba(255,255,255,.70);
   border-color: rgba(0,0,0,.08);
   color: rgba(0,0,0,.72);
 }
 
-/* ART / SCENE */
-.hero-art{ display: grid; justify-items: end; }
+/* =========================
+   ART / SCENE
+   ========================= */
+
+.hero-art{
+  display: grid;
+  justify-items: end;
+}
 
 .hero-scene{
   position: relative;
@@ -241,86 +272,74 @@ nav .cta{
   opacity: 0.85;
 }
 
+/* Fix: keep hero-title using top (your mobile rule used bottom but title is positioned with top) */
 .hero-title{
   position: absolute;
   z-index: 6;
-
-  /* centered in the scene */
   left: 50%;
   top: 68%;
   transform: translate(-50%, -50%);
-
   font-size: clamp(44px, 7vw, 92px);
   font-weight: 900;
   letter-spacing: -0.03em;
-
   color: #fff;
   white-space: nowrap;
-
   text-shadow:
     0 2px 6px rgba(0, 0, 0, 0.25),
     0 10px 26px rgba(0, 0, 0, 0.20);
-
   pointer-events: none;
   user-select: none;
 }
 
-
 /* placeholders */
-section#servicios, section#contacto{ padding: 60px 0; }
+section#servicios,
+section#contacto{
+  padding: 60px 0;
+}
 
-/* Mobile */
+/* =========================
+   MOBILE
+   ========================= */
+
 @media (max-width: 900px){
   .hero-card{ min-height: 0; }
+
+  /* Force art first on mobile — reliable ordering */
   .hero-grid{
-    grid-template-columns: 1fr;
-    padding: 22px 18px 18px;
-  }
-  .hero-art{ justify-items: start; }
-  .hero-band{ top: 52%; height: 52px; }
-  .hero-title{ left: 50%; bottom: 10%; }
-}
-
-@media (max-width: 900px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 18px 14px 16px;
   }
 
-  /* ✅ Make image appear first */
-  .hero-art {
+  .hero-art{
     order: -1;
-  }
-}
-
-@media (max-width: 900px) {
-  .hero-art {
     justify-items: center;
   }
-}
 
-@media (max-width: 900px) {
-  .hero-copy {
+  .hero-copy{
+    order: 1;
     padding-top: 8px;
   }
-}
 
-@media (max-width: 900px) {
-  /* Force the container to flex so ordering ALWAYS works */
-  .hero-grid {
-    display: flex !important;
-    flex-direction: column !important;
+  .hero-band{
+    top: 52%;
+    height: 52px;
   }
 
-  /* Put image first */
-  .hero-art {
-    order: -1 !important;
+  .hero-title{
+    top: 70%;
+    font-size: clamp(38px, 9vw, 70px);
   }
 
-  /* Put text second */
-  .hero-copy {
-    order: 1 !important;
+  /* Nav: show only CTA on mobile to avoid crowding */
+  nav .links a:not(.cta){
+    display: none;
   }
 }
 
-
-
+/* iOS Safari: reduce rare sticky/stacking issues */
+.hero-card,
+.hero-scene{
+  transform: none;
+}
