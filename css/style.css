@@ -298,3 +298,10 @@ section#servicios, section#contacto{ padding: 60px 0; }
   }
 }
 
+@media (max-width: 900px) {
+  .hero-copy {
+    padding-top: 8px;
+  }
+}
+
+
