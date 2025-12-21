@@ -101,3 +101,10 @@
     animation: none !important;
   }
 }
+
+@media (max-width: 480px) {
+  .hero-title {
+    bottom: 4%;
+    font-size: clamp(28px, 8vw, 48px);
+  }
+}
