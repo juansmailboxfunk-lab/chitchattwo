@@ -1,14 +1,10 @@
-/* Chit Chat — style.css (v4)
-   Fixes the issues seen in your screenshots:
-   1) Background image appeared as a big rectangle because the CSS URL was wrong (needs ../ from /css/)
-   2) The <img class="hero-bg"> was showing because it wasn't positioned/hidden anymore
-   3) Hero should be full-bleed (background to screen edge) but content stays in .container
-   4) Keeps mobile “image first” layout
-   5) Adds subtle bottom separator shadow and noise to reduce banding
+/* Chit Chat — FULL-BLEED HERO + MOBILE FIXES (v3)
+   Built to remove "floating card" hero, keep header stable on iOS Safari,
+   force image-first on mobile, and reduce background banding (horizontal lines).
 */
 
 /* =========================
-   BASE
+   TOKENS / BASE
    ========================= */
 :root{
   --ink: #2b2b2b;
@@ -18,8 +14,10 @@
   --container: 1150px;
   --gutter: 32px;
 
-  --cta: rgba(244,170,84,.92);
-  --cta-hover: rgba(244,170,84,1);
+  --radius: 24px;
+
+  --cta: rgba(244, 170, 84, 0.92);
+  --cta-hover: rgba(244, 170, 84, 1);
 }
 
 *{ box-sizing: border-box; }
@@ -38,7 +36,7 @@ body{
 }
 
 /* =========================
-   HEADER / NAV
+   HEADER / NAV (iOS-safe sticky)
    ========================= */
 header{
   position: sticky;
@@ -75,64 +73,72 @@ nav .links{
 nav .cta{
   padding: 10px 14px;
   border-radius: 999px;
-  background: rgba(255,255,255,.70);
+  background: rgba(255,255,255,.7);
   border: 1px solid rgba(0,0,0,.08);
   box-shadow: 0 10px 20px rgba(0,0,0,.06);
   white-space: nowrap;
 }
 
 /* =========================
-   HERO (FULL BLEED BACKGROUND)
+   HERO (FULL BLEED)
+   - background reaches screen edges
+   - subtle bottom shadow only
+   - added dithering/noise + tiny blur to reduce banding lines
    ========================= */
 .hero{
   position: relative;
+  width: 100%;
   overflow: hidden;
   padding: 26px 0 34px;
 }
 
-/* Correct path from /css/style.css -> /images/... is ../images/... */
+/* Background image (blur helps hide WebP banding) */
 .hero::before{
   content:"";
   position:absolute;
   inset:0;
-  background: url("../images/hero/bg-watercolor.webp") center / cover no-repeat;
-  /* tiny blur reduces webp banding/lines */
+  background: url("images/hero/bg-watercolor.webp") center / cover no-repeat;
   filter: blur(0.35px);
-  transform: scale(1.01);
+  transform: scale(1.01); /* prevents edge reveal from blur */
   z-index: 0;
 }
 
-/* noise + subtle bottom separator shadow */
+/* Noise + bottom shadow in ONE overlay layer */
 .hero::after{
   content:"";
   position:absolute;
   inset:0;
   pointer-events:none;
   z-index: 1;
+
+  /* Multiple backgrounds:
+     1) subtle dither/noise to break banding
+     2) bottom shadow separator
+  */
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E"),
-    linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 78%, rgba(0,0,0,0.12) 92%, rgba(0,0,0,0) 100%);
+    linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 78%, rgba(0,0,0,0.10) 92%, rgba(0,0,0,0) 100%);
+
   background-size: 220px 220px, 100% 100%;
   background-repeat: repeat, no-repeat;
-  opacity: 0.18;            /* tweak 0.12–0.26 */
-  mix-blend-mode: overlay;
+
+  opacity: 0.16;              /* increase if lines remain: 0.20–0.26 */
+  mix-blend-mode: overlay;    /* helps noise interact with the background */
 }
 
-/* Your HTML still contains these legacy layers — hide them so they don't appear */
-.hero-bg,
-.hero-band{
-  display: none !important;
-}
-
+/* Inner content wrapper (NOT a floating card) */
 .hero-card{
   position: relative;
   z-index: 2;
-  /* IMPORTANT: hero-card is already inside .container, so no max-width/margin here */
-  padding: 38px 0 36px;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 38px 32px 36px;
   background: transparent;
+  border-radius: 0;
+  box-shadow: none;
 }
 
-/* Mist stays as an overlay at the bottom */
+/* Optional faint “mist” at bottom (kept subtle; no blend mode) */
 .hero-mist{
   position: absolute;
   left: 0;
@@ -144,15 +150,13 @@ nav .cta{
   z-index: 2;
   pointer-events: none;
   user-select: none;
-  opacity: 0.35;
+  opacity: 0.35; /* subtle */
   mix-blend-mode: normal;
   filter: blur(0.25px);
 }
 
 /* Layout */
 .hero-grid{
-  position: relative;
-  z-index: 3;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: 22px;
@@ -171,7 +175,7 @@ nav .cta{
 .hero-subtitle{
   margin: 0 0 14px;
   font-size: clamp(20px, 2.2vw, 32px);
-  color: rgba(122,70,40,.95);
+  color: rgba(122, 70, 40, .95);
 }
 .hero-subtitle strong{ font-weight: 900; }
 
@@ -212,10 +216,10 @@ nav .cta{
   width: 26px;
   height: 26px;
   border-radius: 999px;
-  background: rgba(0,128,96,.14);
-  border: 1px solid rgba(0,128,96,.20);
+  background: rgba(0, 128, 96, 0.14);
+  border: 1px solid rgba(0, 128, 96, 0.20);
   font-weight: 900;
-  color: rgba(0,128,96,.9);
+  color: rgba(0, 128, 96, 0.9);
 }
 
 .hero-actions{
@@ -253,8 +257,12 @@ nav .cta{
 /* =========================
    HERO ART / SCENE
    ========================= */
-.hero-art{ display: grid; justify-items: end; }
+.hero-art{
+  display: grid;
+  justify-items: end;
+}
 
+/* Scene should NOT float as a separate card; keep it subtle */
 .hero-scene{
   position: relative;
   width: 100%;
@@ -331,7 +339,10 @@ section#contacto{
    ========================= */
 @media (max-width: 900px){
   .hero{ padding: 18px 0 26px; }
-  .hero-card{ padding: 18px 0 16px; }
+
+  .hero-card{
+    padding: 18px 14px 16px;
+  }
 
   /* Force image/art first on mobile */
   .hero-grid{
@@ -339,17 +350,28 @@ section#contacto{
     flex-direction: column;
     gap: 18px;
   }
-  .hero-art{ order: -1; justify-items: center; }
-  .hero-copy{ order: 1; padding-top: 8px; }
+
+  .hero-art{
+    order: -1;
+    justify-items: center;
+  }
+
+  .hero-copy{
+    order: 1;
+    padding-top: 8px;
+  }
 
   .hero-title{
     top: 70%;
     font-size: clamp(38px, 9vw, 70px);
   }
 
-  /* Mobile nav: keep CTA only */
-  nav .links a:not(.cta){ display:none; }
+  /* Mobile nav: keep CTA only to avoid wrapping */
+  nav .links a:not(.cta){
+    display: none;
+  }
 
+  /* Safety: ensure the scene is visible height on all iOS builds */
   .hero-scene{
     width: 100%;
     max-width: 560px;
@@ -357,10 +379,300 @@ section#contacto{
   }
 }
 
-/* iOS Safari aspect-ratio fallback */
+/* =========================
+   iOS Safari aspect-ratio fallback
+   ========================= */
 @supports not (aspect-ratio: 4 / 3) {
   .hero-scene{
     height: 0;
-    padding-top: 75%;
+    padding-top: 75%; /* 4:3 */
   }
+}
+
+/* Reduce rare sticky/stacking issues */
+.hero-card,
+.hero-scene{
+  transform: none;
+}
+
+
+/* =========================
+   Services Section + Modal
+   ========================= */
+
+.services{
+  padding: 56px 0 22px;
+}
+.services-header{
+  text-align: center;
+  margin: 0 auto 26px;
+  max-width: 820px;
+}
+.services-header h2{
+  font-size: clamp(28px, 3vw, 44px);
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
+}
+.services-header p{
+  margin: 0;
+  color: var(--text-muted, #5b5b5b);
+  font-size: clamp(16px, 1.5vw, 22px);
+  line-height: 1.45;
+}
+
+.services-layout{
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 26px;
+  align-items: start;
+}
+.services-mascot img{
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 18px 30px rgba(0,0,0,.08));
+}
+
+.services-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.service-card{
+  position: relative;
+  border-radius: 22px;
+  padding: 18px 18px 16px;
+  background: rgba(255,255,255,.60);
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: 0 12px 22px rgba(0,0,0,.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  min-height: 190px;
+}
+.service-card h3{
+  margin: 10px 0 8px;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.service-card p{
+  margin: 0 0 12px;
+  color: rgba(0,0,0,.65);
+  line-height: 1.45;
+  font-size: 14px;
+}
+
+.service-icon{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.service-icon__disc{
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: rgba(0,0,0,.68);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+}
+
+.muted{ opacity: .75; font-weight: 600; }
+
+.service-more{
+  appearance: none;
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.72);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+  box-shadow: 0 10px 16px rgba(0,0,0,.06);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.service-more:hover{ transform: translateY(-1px); box-shadow: 0 14px 24px rgba(0,0,0,.10); }
+.service-more:active{ transform: translateY(0px); box-shadow: 0 10px 16px rgba(0,0,0,.06); }
+
+.service-card--mint{ background: rgba(222, 244, 232, .55); }
+.service-card--sand{ background: rgba(255, 238, 214, .55); }
+.service-card--peach{ background: rgba(255, 226, 220, .55); }
+.service-card--lav{ background: rgba(226, 222, 255, .55); }
+
+.service-icon__disc--mint{ background: rgba(178, 227, 203, .70); }
+.service-icon__disc--sand{ background: rgba(247, 207, 150, .65); }
+.service-icon__disc--peach{ background: rgba(246, 178, 168, .65); }
+.service-icon__disc--lav{ background: rgba(178, 160, 240, .60); }
+
+/* Modal Overlay */
+.service-overlay{
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 9999;
+}
+.service-overlay.is-open{ display: block; }
+.service-overlay__backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 20, 20, .48);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.service-overlay__dialog{
+  position: relative;
+  width: min(1060px, calc(100vw - 28px));
+  max-height: calc(100vh - 28px);
+  margin: 14px auto;
+  border-radius: 28px;
+  background: rgba(255,255,255,.80);
+  border: 1px solid rgba(0,0,0,.10);
+  box-shadow: 0 30px 80px rgba(0,0,0,.35);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.service-overlay__x{
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.12);
+  background: rgba(255,255,255,.72);
+  cursor: pointer;
+  font-size: 28px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+}
+.service-overlay__header{
+  padding: 20px 22px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.service-overlay__badge{
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.10);
+}
+.service-overlay__badge--mint{ background: rgba(178, 227, 203, .85); }
+.service-overlay__badge--sand{ background: rgba(247, 207, 150, .80); }
+.service-overlay__badge--peach{ background: rgba(246, 178, 168, .80); }
+.service-overlay__badge--lav{ background: rgba(178, 160, 240, .75); }
+
+.service-overlay__title{
+  margin: 0;
+  font-size: clamp(20px, 2.3vw, 30px);
+  letter-spacing: -0.02em;
+}
+
+.service-overlay__body{
+  padding: 0 22px 18px;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.service-overlay__art{
+  position: sticky;
+  top: 10px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 16px 30px rgba(0,0,0,.10);
+}
+.service-overlay__art img{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.service-overlay__content{
+  font-size: 16px;
+  line-height: 1.55;
+  color: rgba(0,0,0,.75);
+}
+.service-overlay__content h4{
+  margin: 16px 0 8px;
+  font-size: 18px;
+}
+.service-overlay__content ul{
+  margin: 10px 0 14px 22px;
+}
+.service-overlay__content ul.check{
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+.service-overlay__content ul.check li{
+  position: relative;
+  padding-left: 26px;
+  margin: 6px 0;
+}
+.service-overlay__content ul.check li::before{
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: rgba(20, 120, 90, .9);
+  font-weight: 900;
+}
+.service-overlay__footer{
+  padding: 14px 22px 22px;
+  display: flex;
+  justify-content: center;
+}
+.service-overlay__closebtn{
+  appearance: none;
+  border: 1px solid rgba(0,0,0,.12);
+  background: rgba(236, 155, 92, .92);
+  color: #fff;
+  border-radius: 999px;
+  padding: 12px 26px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 16px 28px rgba(0,0,0,.18);
+}
+
+html.modal-open,
+body.modal-open{
+  overflow: hidden;
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .services-layout{
+    grid-template-columns: 1fr;
+  }
+  .services-mascot{
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .services-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .service-overlay__body{
+    grid-template-columns: 1fr;
+  }
+  .service-overlay__art{
+    position: relative;
+    top: auto;
+  }
+}
+
+@media (max-width: 560px){
+  .services{ padding: 44px 0 14px; }
+  .services-grid{ grid-template-columns: 1fr; }
+  .service-more{ width: 100%; min-width: 0; }
+  .service-card{ min-height: unset; }
 }
