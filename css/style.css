@@ -257,17 +257,12 @@ nav .cta{
   justify-items: end;
 }
 
-.hero-scene{
-  position: relative;
-  width: 100%;
-  max-width: 560px;
-  aspect-ratio: 4 / 3;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-  background: rgba(255,255,255,0.45);
-  isolation: isolate;
+.hero-scene {
+  border-radius: 20px;
+  background: transparent;
+  box-shadow: none; /* remove floating panel */
 }
+
 
 .hero-scene img{
   position: absolute;
