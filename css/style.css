@@ -97,7 +97,7 @@ nav .cta{
   content:"";
   position:absolute;
   inset:0;
-  background: url("images/hero/bg-watercolor.webp") center / cover no-repeat;
+  background: url("../images/hero/bg-watercolor.webp") center / cover no-repeat;
   filter: blur(0.35px);
   transform: scale(1.01); /* prevents edge reveal from blur */
   z-index: 0;
@@ -675,4 +675,61 @@ body.modal-open{
   .services-grid{ grid-template-columns: 1fr; }
   .service-more{ width: 100%; min-width: 0; }
   .service-card{ min-height: unset; }
+}
+
+
+/* =========================
+   FIXES (2025-12-22)
+   ========================= */
+
+/* HERO: ensure full-bleed background and remove accidental large image block */
+.hero{
+  width: 100%;
+  margin: 0;
+  box-shadow: 0 10px 14px -14px rgba(0,0,0,.45); /* subtle bottom separation */
+}
+
+/* The background is handled by .hero::before. If a fallback <img.hero-bg> exists in HTML,
+   it must not take layout space. */
+.hero-bg,
+.hero-band{
+  display: none !important;
+}
+
+/* MOBILE: hero image first (characters block first) */
+@media (max-width: 768px){
+  .hero-grid{
+    grid-template-columns: 1fr;
+  }
+  .hero-art{
+    order: -1;
+  }
+}
+
+/* SERVICES: prevent any overlap with previous section and keep layout stable */
+.services{
+  padding-top: 64px;
+}
+.services-header{
+  position: relative;
+  z-index: 1;
+}
+.services-layout{
+  margin-top: 10px;
+}
+
+
+@media (max-width: 980px){
+  .services-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px){
+  .services-grid{ grid-template-columns: 1fr; }
+}
+
+
+/* MODAL: near-fullscreen */
+.service-overlay__dialog{
+  width: min(92vw, 1100px);
+  max-width: 1100px;
+  height: min(92vh, 760px);
 }
