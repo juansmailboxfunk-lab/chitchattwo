@@ -78,13 +78,42 @@ nav .cta{
 
 .hero{ padding: 22px 0 34px; }
 
-.hero-card{
+/* =========================
+   HERO — FULL BLEED
+   ========================= */
+
+.hero {
   position: relative;
-  border-radius: var(--radius);
-  overflow: hidden; /* critical: prevents edge artifacts */
-  box-shadow: var(--card-shadow);
-  min-height: 560px;
+  width: 100%;
+  background: #fbfbfd; /* fallback */
 }
+
+/* Full-bleed background layer */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("images/hero/bg-watercolor.webp") center / cover no-repeat;
+  z-index: 0;
+}
+
+/* Subtle bottom shadow only */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 40px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.08),
+    rgba(0,0,0,0)
+  );
+  z-index: 2;
+}
+
 
 .hero-bg{
   position: absolute;
