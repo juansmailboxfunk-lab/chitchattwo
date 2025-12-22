@@ -331,7 +331,17 @@ section#contacto{
    ========================= */
 
 @media (max-width: 900px){
-  .hero-card{ min-height: 0; }
+  .hero-card {
+  position: relative;
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 48px 32px 56px;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  z-index: 1;
+}
+
 
   /* Force art first on mobile — reliable ordering */
   .hero-grid{
