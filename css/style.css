@@ -1,10 +1,14 @@
-/* Chit Chat — FULL-BLEED HERO + MOBILE FIXES (v3)
-   Built to remove "floating card" hero, keep header stable on iOS Safari,
-   force image-first on mobile, and reduce background banding (horizontal lines).
+/* Chit Chat — style.css (v4)
+   Fixes the issues seen in your screenshots:
+   1) Background image appeared as a big rectangle because the CSS URL was wrong (needs ../ from /css/)
+   2) The <img class="hero-bg"> was showing because it wasn't positioned/hidden anymore
+   3) Hero should be full-bleed (background to screen edge) but content stays in .container
+   4) Keeps mobile “image first” layout
+   5) Adds subtle bottom separator shadow and noise to reduce banding
 */
 
 /* =========================
-   TOKENS / BASE
+   BASE
    ========================= */
 :root{
   --ink: #2b2b2b;
@@ -14,10 +18,8 @@
   --container: 1150px;
   --gutter: 32px;
 
-  --radius: 24px;
-
-  --cta: rgba(244, 170, 84, 0.92);
-  --cta-hover: rgba(244, 170, 84, 1);
+  --cta: rgba(244,170,84,.92);
+  --cta-hover: rgba(244,170,84,1);
 }
 
 *{ box-sizing: border-box; }
@@ -36,7 +38,7 @@ body{
 }
 
 /* =========================
-   HEADER / NAV (iOS-safe sticky)
+   HEADER / NAV
    ========================= */
 header{
   position: sticky;
@@ -73,72 +75,64 @@ nav .links{
 nav .cta{
   padding: 10px 14px;
   border-radius: 999px;
-  background: rgba(255,255,255,.7);
+  background: rgba(255,255,255,.70);
   border: 1px solid rgba(0,0,0,.08);
   box-shadow: 0 10px 20px rgba(0,0,0,.06);
   white-space: nowrap;
 }
 
 /* =========================
-   HERO (FULL BLEED)
-   - background reaches screen edges
-   - subtle bottom shadow only
-   - added dithering/noise + tiny blur to reduce banding lines
+   HERO (FULL BLEED BACKGROUND)
    ========================= */
 .hero{
   position: relative;
-  width: 100%;
   overflow: hidden;
   padding: 26px 0 34px;
 }
 
-/* Background image (blur helps hide WebP banding) */
+/* Correct path from /css/style.css -> /images/... is ../images/... */
 .hero::before{
   content:"";
   position:absolute;
   inset:0;
-  background: url("images/hero/bg-watercolor.webp") center / cover no-repeat;
+  background: url("../images/hero/bg-watercolor.webp") center / cover no-repeat;
+  /* tiny blur reduces webp banding/lines */
   filter: blur(0.35px);
-  transform: scale(1.01); /* prevents edge reveal from blur */
+  transform: scale(1.01);
   z-index: 0;
 }
 
-/* Noise + bottom shadow in ONE overlay layer */
+/* noise + subtle bottom separator shadow */
 .hero::after{
   content:"";
   position:absolute;
   inset:0;
   pointer-events:none;
   z-index: 1;
-
-  /* Multiple backgrounds:
-     1) subtle dither/noise to break banding
-     2) bottom shadow separator
-  */
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E"),
-    linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 78%, rgba(0,0,0,0.10) 92%, rgba(0,0,0,0) 100%);
-
+    linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 78%, rgba(0,0,0,0.12) 92%, rgba(0,0,0,0) 100%);
   background-size: 220px 220px, 100% 100%;
   background-repeat: repeat, no-repeat;
-
-  opacity: 0.16;              /* increase if lines remain: 0.20–0.26 */
-  mix-blend-mode: overlay;    /* helps noise interact with the background */
+  opacity: 0.18;            /* tweak 0.12–0.26 */
+  mix-blend-mode: overlay;
 }
 
-/* Inner content wrapper (NOT a floating card) */
+/* Your HTML still contains these legacy layers — hide them so they don't appear */
+.hero-bg,
+.hero-band{
+  display: none !important;
+}
+
 .hero-card{
   position: relative;
   z-index: 2;
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: 38px 32px 36px;
+  /* IMPORTANT: hero-card is already inside .container, so no max-width/margin here */
+  padding: 38px 0 36px;
   background: transparent;
-  border-radius: 0;
-  box-shadow: none;
 }
 
-/* Optional faint “mist” at bottom (kept subtle; no blend mode) */
+/* Mist stays as an overlay at the bottom */
 .hero-mist{
   position: absolute;
   left: 0;
@@ -150,13 +144,15 @@ nav .cta{
   z-index: 2;
   pointer-events: none;
   user-select: none;
-  opacity: 0.35; /* subtle */
+  opacity: 0.35;
   mix-blend-mode: normal;
   filter: blur(0.25px);
 }
 
 /* Layout */
 .hero-grid{
+  position: relative;
+  z-index: 3;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: 22px;
@@ -175,7 +171,7 @@ nav .cta{
 .hero-subtitle{
   margin: 0 0 14px;
   font-size: clamp(20px, 2.2vw, 32px);
-  color: rgba(122, 70, 40, .95);
+  color: rgba(122,70,40,.95);
 }
 .hero-subtitle strong{ font-weight: 900; }
 
@@ -216,10 +212,10 @@ nav .cta{
   width: 26px;
   height: 26px;
   border-radius: 999px;
-  background: rgba(0, 128, 96, 0.14);
-  border: 1px solid rgba(0, 128, 96, 0.20);
+  background: rgba(0,128,96,.14);
+  border: 1px solid rgba(0,128,96,.20);
   font-weight: 900;
-  color: rgba(0, 128, 96, 0.9);
+  color: rgba(0,128,96,.9);
 }
 
 .hero-actions{
@@ -257,12 +253,8 @@ nav .cta{
 /* =========================
    HERO ART / SCENE
    ========================= */
-.hero-art{
-  display: grid;
-  justify-items: end;
-}
+.hero-art{ display: grid; justify-items: end; }
 
-/* Scene should NOT float as a separate card; keep it subtle */
 .hero-scene{
   position: relative;
   width: 100%;
@@ -339,10 +331,7 @@ section#contacto{
    ========================= */
 @media (max-width: 900px){
   .hero{ padding: 18px 0 26px; }
-
-  .hero-card{
-    padding: 18px 14px 16px;
-  }
+  .hero-card{ padding: 18px 0 16px; }
 
   /* Force image/art first on mobile */
   .hero-grid{
@@ -350,28 +339,17 @@ section#contacto{
     flex-direction: column;
     gap: 18px;
   }
-
-  .hero-art{
-    order: -1;
-    justify-items: center;
-  }
-
-  .hero-copy{
-    order: 1;
-    padding-top: 8px;
-  }
+  .hero-art{ order: -1; justify-items: center; }
+  .hero-copy{ order: 1; padding-top: 8px; }
 
   .hero-title{
     top: 70%;
     font-size: clamp(38px, 9vw, 70px);
   }
 
-  /* Mobile nav: keep CTA only to avoid wrapping */
-  nav .links a:not(.cta){
-    display: none;
-  }
+  /* Mobile nav: keep CTA only */
+  nav .links a:not(.cta){ display:none; }
 
-  /* Safety: ensure the scene is visible height on all iOS builds */
   .hero-scene{
     width: 100%;
     max-width: 560px;
@@ -379,18 +357,10 @@ section#contacto{
   }
 }
 
-/* =========================
-   iOS Safari aspect-ratio fallback
-   ========================= */
+/* iOS Safari aspect-ratio fallback */
 @supports not (aspect-ratio: 4 / 3) {
   .hero-scene{
     height: 0;
-    padding-top: 75%; /* 4:3 */
+    padding-top: 75%;
   }
-}
-
-/* Reduce rare sticky/stacking issues */
-.hero-card,
-.hero-scene{
-  transform: none;
 }
