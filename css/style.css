@@ -145,8 +145,9 @@ nav .cta{
   z-index: 4;
   pointer-events: none;
   user-select: none;
-  opacity: .95;
-  mix-blend-mode: soft-light;
+  mix-blend-mode: normal;
+  opacity: 0.35;          /* tune 0.25–0.55 */
+  filter: blur(0.2px);    /* tiny blur helps hide banding */
 }
 
 .hero-grid{
