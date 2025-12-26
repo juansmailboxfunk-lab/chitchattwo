@@ -177,10 +177,52 @@
   </div>
 </section>
 
-<section id="contacto">
-  <div class="container">
-    <h2>Contacto</h2>
-    <p>Placeholder section — your contact form / booking CTA goes here.</p>
+<section id="contacto" class="contact contact-full contact-v2">
+  <div class="section-inner">
+    <header class="contact-head">
+      <h2>Contacta conmigo</h2>
+    </header>
+
+    <div class="contact-hero-card">
+      <img class="contact-hero-art" src="images/contact.png" alt="Contacto">
+
+      <div class="contact-hero-overlay">
+        <p class="contact-lead">
+          Para más información o reservar una <strong>evaluación inicial</strong>, no dudes en ponerte en <strong>contacto conmigo</strong>.<br>
+          <strong>¡Estoy aquí para ayudarte!</strong>
+        </p>
+
+        <div class="contact-info">
+          <div class="contact-info-row"><span class="contact-ico">📞</span><span>555 123 456</span></div>
+          <div class="contact-info-row"><span class="contact-ico">✉️</span><span>info@contacto.com</span></div>
+          <div class="contact-info-row"><span class="contact-ico">📍</span><span>Zaragoza, España</span></div>
+        </div>
+
+        <form class="contact-form-v2" action="#" method="post">
+          <label>
+            <span>Nombre</span>
+            <input type="text" name="nombre" autocomplete="name" placeholder="Nombre" required>
+          </label>
+
+          <label>
+            <span>E-mail</span>
+            <input type="email" name="email" autocomplete="email" placeholder="E-mail" required>
+          </label>
+
+          <label>
+            <span>Teléfono <em>(opcional)</em></span>
+            <input type="tel" name="telefono" autocomplete="tel" placeholder="Teléfono (opcional)">
+          </label>
+
+          <label>
+            <span>Tu mensaje</span>
+            <textarea name="mensaje" rows="5" placeholder="Tu mensaje..." required></textarea>
+          </label>
+
+          <button type="submit" class="btn btn-primary btn-contact">Enviar mensaje</button>
+        </form>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -212,5 +254,26 @@
   </div>
 </div>
   <script src="js/services.js" defer></script>
+<footer class="site-footer footer-full">
+  <div class="footer-inner">
+    <div class="footer-illustration" aria-hidden="true">
+      <img src="images/footer-illustration.svg" alt="">
+    </div>
+
+    <div class="footer-message">
+      <h2>Gracias por pasar por Chit Chat</h2>
+      <p>Si tienes dudas sobre el desarrollo del habla, el lenguaje o la comunicación, estaré encantada de orientarte y acompañarte en el proceso.</p>
+      <a class="btn btn-primary" href="#contacto">Escríbeme</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© <span id="year"></span> Chit Chat</span>
+  </div>
+</footer>
+
+<script>
+  // Footer year
+  (function(){ var y=document.getElementById('year'); if(y) y.textContent = new Date().getFullYear(); })();
+</script>
 </body>
 </html>
