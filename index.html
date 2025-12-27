@@ -25,50 +25,19 @@
 
 <main>
 
-<section class="hero" id="inicio">
-  <div class="container">
-    <div class="hero-card">
+<section class="hero hero-full" id="hero">
+  <div class="hero-inner">
+    <div class="hero-art" id="heroArt" aria-label="Chit Chat hero artwork">
+      <img class="hero-logo" src="images/hero/hero-logo.webp" alt="Chit Chat" decoding="async" loading="eager">
+      <img class="hero-char hero-croc" src="images/hero/hero-croc.webp" alt="" decoding="async" loading="eager">
+      <img class="hero-char hero-woman" src="images/hero/hero-woman.webp" alt="" decoding="async" loading="eager">
+    </div>
 
-      <img class="hero-bg" src="images/hero/bg-watercolor.webp" alt="" />
-      <div class="hero-band" aria-hidden="true"></div>
-      <img class="hero-mist" src="images/hero/mist-bottom.webp" alt="" />
-
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <h1>Chit Chat</h1>
-          <p class="hero-subtitle"><strong>Logopedia</strong> para niños y familias</p>
-
-          <p class="hero-lead">
-            Sesiones cercanas, lúdicas y basadas en evidencia. Atención en persona y online.
-          </p>
-
-          <p class="hero-meta">
-            Logopeda titulada · Atención a niños · Nuerodiversidad
-          </p>
-
-          <ul class="hero-bullets" aria-label="Puntos clave">
-            <li>Logopeda titulada</li>
-            <li>Atención a niños</li>
-            <li>Nuerodiversidad</li>
-            <li>Apoyo a familias</li>
-          </ul>
-
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#contacto">Reserva una cita</a>
-            <a class="btn btn-ghost" href="#servicios">Ver servicios</a>
-          </div>
-        </div>
-
-        <div class="hero-art">
-          <div class="hero-scene" aria-hidden="true">
-            <div class="hero-glow"></div>
-            <img class="hero-characters" src="images/hero/characters.webp" alt="" />
-            <div class="hero-title">Chit Chat</div>
-            <img class="hero-sparkles" src="images/hero/sparkles.svg" alt="" />
-          </div>
-        </div>
-      </div>
-
+    <div class="hero-copy">
+      <h1>Chit Chat — Logopedia para niños y familias</h1>
+      <p>Sesiones cercanas, lúdicas y basadas en evidencia. Atención en persona y online.</p>
+      <p><strong>Logopeda titulada</strong> · Atención a niños · Neurodiversidad · Apoyo a familias</p>
+      <a class="btn btn-primary" href="#contacto">Reserva una cita</a>
     </div>
   </div>
 </section>
@@ -275,5 +244,6 @@
   // Footer year
   (function(){ var y=document.getElementById('year'); if(y) y.textContent = new Date().getFullYear(); })();
 </script>
+  <script src="js/hero-reveal.js" defer></script>
 </body>
 </html>

@@ -1061,3 +1061,121 @@ body.modal-open{
   }
   .footer-illustration{ order: -1; }
 }
+
+
+/* === HERO (Clean mode, Option C: logo first, characters slide in) === */
+:root{
+  --hero-bg: #F7F9FB;
+  --hero-ease: cubic-bezier(.2,.8,.2,1);
+}
+
+.hero{
+  background: var(--hero-bg);
+  overflow: hidden;
+}
+
+/* full-bleed hero band while keeping inner content aligned */
+.hero.hero-full{
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* subtle bottom separator shadow */
+.hero.hero-full{
+  box-shadow: 0 8px 18px -14px rgba(0,0,0,0.28);
+}
+
+.hero-inner{
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: clamp(26px, 4vw, 60px) 0;
+  display: grid;
+  gap: clamp(18px, 3vw, 36px);
+  align-items: center;
+}
+
+@media (min-width: 900px){
+  .hero-inner{
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+
+.hero-art{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: min(70vh, 620px);
+}
+
+.hero-art img{
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+  width: clamp(520px, 52vw, 980px);
+  height: auto;
+  pointer-events: none;
+}
+
+.hero-logo{
+  z-index: 1;
+}
+
+.hero-char{
+  z-index: 2;
+  width: auto;
+  height: min(65%, 520px);
+  opacity: 0;
+  transition:
+    transform 700ms var(--hero-ease),
+    opacity 700ms var(--hero-ease);
+}
+
+/* Final placements: sitting on logo */
+.hero-croc{
+  left: 34%;
+  top: 34%;
+  transform: translate(-50%, -50%) translateX(-60px);
+}
+.hero-woman{
+  left: 66%;
+  top: 33%;
+  transform: translate(-50%, -50%) translateX(60px);
+}
+
+/* Reveal state */
+.hero.is-revealed .hero-char{
+  opacity: 1;
+}
+.hero.is-revealed .hero-croc{
+  transform: translate(-50%, -50%) translateX(0);
+  transition-delay: 80ms;
+}
+.hero.is-revealed .hero-woman{
+  transform: translate(-50%, -50%) translateX(0);
+  transition-delay: 180ms;
+}
+
+/* Copy */
+.hero-copy h1{
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1.1;
+  margin: 0 0 10px;
+}
+.hero-copy p{
+  margin: 0 0 16px;
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 1.5;
+  color: rgba(0,0,0,0.72);
+}
+
+/* Mobile: art first */
+@media (max-width: 899px){
+  .hero-inner{
+    grid-template-columns: 1fr;
+  }
+  .hero-art{
+    order: -1;
+  }
+}
