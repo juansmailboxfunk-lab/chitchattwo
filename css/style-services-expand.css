@@ -1,0 +1,273 @@
+/* =========================================
+   Services – Global overlay (no reflow)
+   Works with the JS you pasted
+   ========================================= */
+
+.service-more[hidden]{ display:none !important; }
+
+/* Keep cards tidy (optional) */
+.service-preview{
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Hide the inline full text in cards (we show it in the overlay instead) */
+.service-card .service-more{
+  display: none !important;
+}
+
+/* Overlay */
+.service-overlay[hidden]{ display:none !important; }
+
+.service-overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(20, 24, 32, 0.22);
+  backdrop-filter: blur(6px);
+}
+
+.service-overlay-card{
+  width: min(900px, calc(100vw - 36px));
+  max-height: min(75vh, 760px);
+  overflow: auto;
+
+  background: rgba(255,255,255,0.96);
+  border: 1px solid rgba(31,36,48,0.14);
+  border-radius: 22px;
+  box-shadow: 0 28px 70px rgba(31,36,48,0.25);
+  padding: 18px 18px 16px;
+  position: relative;
+}
+
+.service-overlay-close{
+  position: sticky;
+  top: 10px;
+  float: right;
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  border: 1px solid rgba(31,36,48,0.12);
+  background: rgba(255,255,255,0.9);
+  font-size: 22px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+#serviceOverlayContent h3{
+  margin: 0 0 10px 0;
+}
+
+#serviceOverlayContent p,
+#serviceOverlayContent li{
+  color: var(--muted);
+}
+
+#serviceOverlayContent ul{
+  margin: 8px 0 0 18px;
+}
+#serviceOverlayContent li{ margin: 6px 0; }
+
+/* =========================================
+   Services Overlay — Clean Pastel Modal
+   ========================================= */
+
+.service-overlay{
+  background:
+    radial-gradient(900px 500px at 20% 10%, rgba(255,214,231,0.28), transparent 60%),
+    radial-gradient(900px 500px at 85% 25%, rgba(201,242,227,0.26), transparent 60%),
+    rgba(20, 24, 32, 0.22);
+  backdrop-filter: blur(10px);
+}
+
+.service-overlay-card{
+  border-radius: 26px;
+  border: 1px solid rgba(31,36,48,0.10);
+  box-shadow:
+    0 40px 120px rgba(31,36,48,0.22),
+    0 12px 30px rgba(31,36,48,0.10);
+  padding: 22px 22px 18px;
+}
+
+/* Title + spacing */
+#serviceOverlayContent h3{
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px 0;
+}
+
+/* Typography for body */
+#serviceOverlayContent p{
+  margin: 10px 0 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* Bullet list */
+#serviceOverlayContent ul{
+  margin: 10px 0 0 18px;
+  padding: 0;
+}
+#serviceOverlayContent li{
+  margin: 8px 0;
+  color: var(--muted);
+}
+
+/* Close button */
+.service-overlay-close{
+  width: 42px;
+  height: 42px;
+  border-radius: 16px;
+  border: 1px solid rgba(31,36,48,0.10);
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 10px 20px rgba(31,36,48,0.10);
+  color: rgba(31,36,48,0.92);
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+
+.service-overlay-close:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.96);
+  box-shadow: 0 14px 26px rgba(31,36,48,0.14);
+}
+
+.service-overlay-close:active{
+  transform: translateY(0);
+}
+
+/* Keyboard focus */
+.service-overlay-close:focus-visible{
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(124, 140, 255, 0.22),
+    0 12px 24px rgba(31,36,48,0.14);
+}
+
+/* Nice scrollbar (webkit) */
+.service-overlay-card::-webkit-scrollbar{ width: 10px; }
+.service-overlay-card::-webkit-scrollbar-thumb{
+  background: rgba(31,36,48,0.14);
+  border-radius: 999px;
+}
+.service-overlay-card::-webkit-scrollbar-track{
+  background: rgba(31,36,48,0.06);
+  border-radius: 999px;
+}
+
+/* Mobile tweaks */
+@media (max-width: 560px){
+  .service-overlay-card{
+    border-radius: 22px;
+    padding: 18px 16px 14px;
+    max-height: 78vh;
+  }
+  #serviceOverlayContent h3{ font-size: 1.25rem; }
+}
+
+#serviceOverlayContent h3::after{
+  content: "Información del servicio";
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 650;
+  color: rgba(92, 100, 119, 0.85);
+  margin-top: 6px;
+}
+
+/* Image inside service overlay */
+.service-overlay-figure{
+  margin: 18px 0 6px;
+  text-align: center;
+}
+
+.service-overlay-figure img{
+  width: 100%;
+  max-width: 520px;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(31,36,48,0.18);
+}
+
+.service-overlay-figure{
+  margin: 18px 0 6px;
+  text-align: center;
+}
+.service-overlay-figure img{
+  width: 100%;
+  max-width: 520px;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(31,36,48,0.18);
+}
+
+/* Center image inside service overlay */
+.service-overlay-figure{
+  margin: 24px auto 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.service-overlay-figure img{
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+
+  border-radius: 22px;
+  box-shadow: 0 22px 48px rgba(31,36,48,0.18);
+}
+/* Overlay image first */
+.service-overlay-figure{
+  margin: 18px auto 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.service-overlay-figure img{
+  width: 100%;
+  max-width: 560px;
+  border-radius: 22px;
+  box-shadow: 0 22px 48px rgba(31,36,48,0.18);
+}
+
+/* Text block spacing */
+.service-overlay-text{
+  margin-top: 6px;
+}
+
+.service-overlay-text p{
+  line-height: 1.65;
+}
+
+.service-overlay-text ul{
+  margin-top: 10px;
+}
+
+/* =========================
+   Mobile overlay fixes
+   ========================= */
+@media (max-width: 640px){
+
+  /* Give the modal more vertical room */
+  .service-overlay-card{
+    max-height: 88vh;
+    padding: 16px 14px 14px;
+  }
+
+  /* Make image clearly visible on mobile */
+  .service-overlay-figure{
+    margin: 12px auto 16px;
+  }
+
+  .service-overlay-figure img{
+    max-width: 100%;
+    border-radius: 18px;
+  }
+
+  /* Ensure text flows naturally after image */
+  .service-overlay-text{
+    margin-top: 0;
+  }
+}
