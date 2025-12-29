@@ -4,56 +4,53 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Chit Chat — Logopedia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
-  <header class="site-header">
-    <nav class="nav">
-      <a class="brand" href="#top">Chit Chat</a>
-
-      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
-        <span></span><span></span><span></span>
-      </button>
-
-      <div class="nav-links" id="navLinks">
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#">Chit Chat</a>
+      <nav class="nav">
         <a href="#servicios">Servicios</a>
         <a href="#sobre-mi">Sobre mí</a>
         <a href="#preguntas">Preguntas</a>
-        <a class="cta" href="#reserva">Reserva una cita</a>
-      </div>
-    </nav>
+        <a class="nav-cta" href="#reserva">Reserva una cita</a>
+      </nav>
+    </div>
   </header>
 
-  <main id="top">
-    <!-- Clean hero: solid background only (#F7F9FB), no textures, no baked shadows -->
+  <main>
     <section class="hero" aria-label="Presentación">
-      <div class="hero-inner">
+      <div class="container hero-inner">
+        <!-- 1) Logo image FIRST, exactly like the provided PNG -->
+        <div class="hero-lockup" aria-label="Chit Chat logotipo">
+          <img src="images/final-look-hero.png" alt="Chit Chat — Logopedia para niños y familias" />
+        </div>
+
+        <!-- 2) Text content UNDER the logo image -->
         <div class="hero-copy">
           <h1>Chit Chat — Logopedia para niños y familias</h1>
           <p class="lead">Sesiones cercanas, lúdicas y basadas en evidencia. Atención en persona y online.</p>
-          <ul class="bullets">
+
+          <ul class="bullets" aria-label="Puntos clave">
             <li>Logopeda titulada</li>
             <li>Neurodiversidad</li>
             <li>Apoyo a familias</li>
           </ul>
+
           <div class="hero-actions">
             <a class="btn primary" href="#reserva">Reserva una cita</a>
             <a class="btn ghost" href="#servicios">Ver servicios</a>
           </div>
         </div>
-
-        <!-- Art block: logo first, characters slide in on scroll -->
-        <div class="hero-art" data-hero-reveal>
-          <img class="hero-logo" src="images/chit-chat-logo.png" alt="Chit Chat" />
-
-          <!-- Characters are transparent PNGs. We keep their original proportions; placement is CSS only. -->
-          <img class="hero-char hero-char--croc" src="images/croc-sitting.png" alt="" aria-hidden="true" />
-          <img class="hero-char hero-char--woman" src="images/avatar-sitting.png" alt="" aria-hidden="true" />
-        </div>
       </div>
     </section>
 
-    <!-- Placeholder sections so scroll/reveal is testable -->
+    <!-- Placeholder sections -->
     <section id="servicios" class="section">
       <div class="container">
         <h2>Servicios</h2>
@@ -88,7 +85,5 @@
       <small>© Chit Chat</small>
     </div>
   </footer>
-
-  <script src="js/hero.js"></script>
 </body>
 </html>
