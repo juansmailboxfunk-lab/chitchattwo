@@ -1,5 +1,5 @@
 :root{
-  --bg: #F7F9FB;
+  --bg: #FFFFFF;
   --card: #ffffff;
   --text: #1f2937;
   --muted: #475569;
@@ -10,7 +10,12 @@
 
 *{ box-sizing:border-box; }
 
-html,body{ height:100%; }
+html,body{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background: #FFFFFF;
+}
+
 
 body{
   margin:0;
@@ -64,14 +69,21 @@ a{ color:inherit; text-decoration:none; }
 
 /* Hero */
 .hero{
-  padding: 38px 0 28px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 42px 0;
 }
 
+
 .hero-inner{
-  display:flex;
-  flex-direction: column;
-  gap: 22px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: center;
+  justify-items: center;
 }
+
 
 /* The PNG lockup (logo + characters + tagline) */
 .hero-lockup{
@@ -88,10 +100,10 @@ a{ color:inherit; text-decoration:none; }
 
 /* Text UNDER the PNG */
 .hero-copy{
-  width: 100%;
   max-width: 860px;
-  margin-inline: auto;
+  text-align: center;
 }
+
 
 .hero-copy h1{
   margin: 0;
@@ -127,11 +139,12 @@ a{ color:inherit; text-decoration:none; }
 }
 
 .hero-actions{
-  margin-top: 18px;
-  display:flex;
+  display: flex;
   gap: 12px;
   flex-wrap: wrap;
+  justify-content: center;
 }
+
 
 .btn{
   display:inline-flex;
@@ -183,4 +196,12 @@ a{ color:inherit; text-decoration:none; }
   .nav{ display:none; }
   .hero{ padding: 26px 0 18px; }
   .container{ width:min(1120px, calc(100% - 32px)); }
+}
+
+
+@media (max-width: 520px){
+  .hero{ padding: 28px 0; }
+  .hero-lockup{ width: min(520px, 92vw); }
+  .lockup-woman{ width: 28%; left: 62%; top: -10%; }
+  .lockup-croc{ width: 22%; left: 34%; top: -6%; }
 }

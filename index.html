@@ -26,12 +26,18 @@
   <main>
     <section class="hero" aria-label="Presentación">
       <div class="container hero-inner">
-        <!-- 1) Logo image FIRST, exactly like the provided PNG -->
+        
+        <!-- 1) Logo block text first; characters + tagline animate in -->
         <div class="hero-lockup" aria-label="Chit Chat logotipo">
-          <img src="images/final-look-hero.png" alt="Chit Chat — Logopedia para niños y familias" />
+          <div class="lockup-stage" id="lockupStage">
+            <img class="lockup-logo" src="images/chit-chat-logo.png" alt="Chit Chat" />
+            <img class="lockup-woman" src="images/avatar-sitting.png" alt="" aria-hidden="true" />
+            <img class="lockup-croc" src="images/croc-sitting.png" alt="" aria-hidden="true" />
+          </div>
+          <div class="lockup-tagline" id="lockupTagline">Logopedia para niños y familias</div>
         </div>
 
-        <!-- 2) Text content UNDER the logo image -->
+<!-- 2) Text content UNDER the logo image -->
         <div class="hero-copy">
           <h1>Chit Chat — Logopedia para niños y familias</h1>
           <p class="lead">Sesiones cercanas, lúdicas y basadas en evidencia. Atención en persona y online.</p>
@@ -85,5 +91,6 @@
       <small>© Chit Chat</small>
     </div>
   </footer>
+  <script src="js/hero-anim.js"></script>
 </body>
 </html>
